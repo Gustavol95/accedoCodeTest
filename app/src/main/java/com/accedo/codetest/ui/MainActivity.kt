@@ -1,7 +1,8 @@
-package com.accedo.codetest
+package com.accedo.codetest.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.accedo.codetest.R
 
 class MainActivity : AppCompatActivity() {
 
