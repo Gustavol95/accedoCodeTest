@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'kotlin-kapt'
 
+def marvelApikeyPropertiesFile = rootProject.file("marvelApi.properties")
+def marvelApikeyProperties = new Properties()
+marvelApikeyProperties.load(new FileInputStream(marvelApikeyPropertiesFile))
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -14,6 +18,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "PUBLIC_KEY", marvelApikeyProperties['PUBLIC_KEY'])
+        buildConfigField("String", "PRIVATE_KEY", marvelApikeyProperties['PRIVATE_KEY'])
     }
 
     dataBinding {
@@ -26,6 +32,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+
 }
 
 dependencies {
