@@ -13,7 +13,7 @@ data class Data<T>(
 data class Character(
     val id : Long,
     val name : String,
-    val description : String,
+    val description : String?,
     val thumbnail: Thumbnail
 
 )
@@ -25,4 +25,17 @@ data class Thumbnail(
     fun getUrl() : String {
         return "$path.$extension"
     }
+}
+
+data class Comic(
+    val id: Long,
+    val title: String,
+    val description: String?,
+    val thumbnail: Thumbnail
+)
+
+sealed class Status {
+    class Success<T>(val response: ApiResponse<T>) : Status()
+    class Failure(val throwable: Throwable) : Status()
+    object Loading : Status()
 }

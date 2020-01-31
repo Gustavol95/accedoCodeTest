@@ -20,9 +20,13 @@
             app:argType="long" />
         <argument
             android:name="description"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
         <argument
             android:name="urlThumbnail"
+            app:argType="string" />
+        <argument
+            android:name="name"
             app:argType="string" />
     </fragment>
 </navigation>

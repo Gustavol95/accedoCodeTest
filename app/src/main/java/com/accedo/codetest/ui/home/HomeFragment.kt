@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.accedo.codetest.R
 import com.accedo.codetest.data.network.Character
 import com.accedo.codetest.data.network.Network
 import com.accedo.codetest.data.repository.CharacterRepository
@@ -26,7 +28,8 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentHomeBinding.inflate(inflater)
+        val binding: FragmentHomeBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_home, container, false)
         binding.recycler.adapter = CharacterPagedListAdapter(
             object : CharacterPagedListAdapter.OnClickCharacter {
                 override fun onClick(character: Character) {
@@ -35,7 +38,8 @@ class HomeFragment : Fragment() {
                         HomeFragmentDirections.actionHomeFragmentToCharacterDetailFragment(
                             character.id,
                             character.description,
-                            character.thumbnail.getUrl()
+                            character.thumbnail.getUrl(),
+                            character.name
                         )
                     )
                 }
