@@ -1,6 +1,7 @@
 package com.accedo.codetest.utils
 
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.paging.PagedList
@@ -29,5 +30,13 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
                     .placeholder(R.drawable.loading_animation)
                     .error(R.drawable.ic_broken_image))
             .into(imgView)
+    }
+}
+
+@BindingAdapter("description")
+fun bindDescription(textView: TextView, description: String?) {
+    textView.text = when(description.isNullOrEmpty()) {
+        true -> "No description"
+        else -> description
     }
 }

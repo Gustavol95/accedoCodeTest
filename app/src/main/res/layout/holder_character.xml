@@ -8,6 +8,10 @@
         <variable
             name="character"
             type="com.accedo.codetest.data.network.Character" />
+
+        <variable
+            name="listener"
+            type="com.accedo.codetest.ui.home.CharacterPagedListAdapter.OnClickCharacter" />
     </data>
 
     <RelativeLayout
@@ -19,7 +23,8 @@
             android:layout_height="wrap_content"
             app:cardElevation="2dp"
             app:cardCornerRadius="2dp"
-            android:layout_margin="4dp">
+            android:layout_margin="4dp"
+            android:onClick="@{() -> listener.onClick(character)}">
 
             <LinearLayout
                 android:layout_width="match_parent"
