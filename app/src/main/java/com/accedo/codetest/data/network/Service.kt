@@ -63,9 +63,9 @@ object Network {
     private val client = OkHttpClient.Builder()
         .addInterceptor(AuthInterceptor)
         .addInterceptor(logging)
-        .connectTimeout(60, TimeUnit.SECONDS)
-        .readTimeout(60, TimeUnit.SECONDS)
-        .writeTimeout(60, TimeUnit.SECONDS)
+        .connectTimeout(20, TimeUnit.SECONDS)
+        .readTimeout(20, TimeUnit.SECONDS)
+        .writeTimeout(20, TimeUnit.SECONDS)
         .build()
 
 

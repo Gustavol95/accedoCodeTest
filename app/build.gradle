@@ -38,9 +38,12 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:$version_appcompat"
     implementation "androidx.core:core-ktx:$version_ktx"
+
+    //Android Support and Material
+    implementation "androidx.appcompat:appcompat:$version_appcompat"
     implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
+    implementation "com.google.android.material:material:$version_material"
 
     // Logging
     implementation "com.jakewharton.timber:timber:$version_timber"
@@ -64,6 +67,9 @@ dependencies {
 
     //Paging
     implementation "androidx.paging:paging-runtime-ktx:$version_paging"
+
+    // Glide for images
+    implementation "com.github.bumptech.glide:glide:$version_glide"
 
     testImplementation "junit:junit:$version_junit"
     androidTestImplementation "androidx.test.ext:junit:$version_junit_ext"
