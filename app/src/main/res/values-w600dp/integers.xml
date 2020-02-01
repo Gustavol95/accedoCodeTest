@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="character_grid_colums">3</integer>
+    <integer name="comic_grid_colums">2</integer>
+    <integer name="character_page_size">20</integer>
+
+</resources>

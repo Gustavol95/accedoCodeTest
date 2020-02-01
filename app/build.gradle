@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: "androidx.navigation.safeargs"
+apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'kotlin-kapt'
 
 def marvelApikeyPropertiesFile = rootProject.file("marvelApi.properties")
@@ -13,13 +13,14 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.accedo.codetest"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "PUBLIC_KEY", marvelApikeyProperties['PUBLIC_KEY'])
         buildConfigField("String", "PRIVATE_KEY", marvelApikeyProperties['PRIVATE_KEY'])
+        multiDexEnabled = true
     }
 
     dataBinding {
@@ -49,8 +50,8 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$version_timber"
 
     // Navigation
-    implementation "android.arch.navigation:navigation-fragment-ktx:$version_navigation"
-    implementation "android.arch.navigation:navigation-ui-ktx:$version_navigation"
+    implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
 
     // Retrofit for networking
     implementation "com.squareup.retrofit2:retrofit:$version_retrofit"

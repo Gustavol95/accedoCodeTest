@@ -61,7 +61,7 @@ object AuthInterceptor : Interceptor {
 object Network {
     //Instantiate Logging interceptor
     private val logging =  HttpLoggingInterceptor().apply {
-        level =  HttpLoggingInterceptor.Level.BASIC
+        level =  HttpLoggingInterceptor.Level.BODY
     }
 
     private val client = OkHttpClient.Builder()

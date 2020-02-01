@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.accedo.codetest.App.Companion.PAGE_SIZE
 import com.accedo.codetest.data.network.Character
 import com.accedo.codetest.data.network.MarvelService
 import com.accedo.codetest.data.network.Status
@@ -17,10 +18,9 @@ class CharacterRepository(private val marvelService: MarvelService) {
 
     fun fetchLiveCharacterPagedList(compositeDisposable: CompositeDisposable): LiveData<PagedList<Character>> {
         characterDataSourceFactory = CharacterDataSourceFactory(marvelService, compositeDisposable)
-
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
-            .setPageSize(10)
+            .setPageSize(PAGE_SIZE)
             .build()
 
         characterPagedList = LivePagedListBuilder(characterDataSourceFactory, config).build()

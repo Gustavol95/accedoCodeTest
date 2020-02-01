@@ -9,6 +9,10 @@ class CharacterDetailViewModel(val characterRepository: CharacterRepository) : V
     val compositeDisposable = CompositeDisposable()
     fun comicLiveList(idCharacter : Long) = characterRepository.fetchLiveComicsList(idCharacter,compositeDisposable)
 
+    fun refresh(idCharacter: Long) {
+        characterRepository.fetchLiveComicsList(idCharacter,compositeDisposable)
+    }
+
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.dispose()

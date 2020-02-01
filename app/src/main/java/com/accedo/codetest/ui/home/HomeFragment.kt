@@ -13,7 +13,6 @@ import com.accedo.codetest.data.network.Character
 import com.accedo.codetest.data.network.Network
 import com.accedo.codetest.data.repository.CharacterRepository
 import com.accedo.codetest.databinding.FragmentHomeBinding
-import timber.log.Timber
 
 class HomeFragment : Fragment() {
 
@@ -33,20 +32,20 @@ class HomeFragment : Fragment() {
         binding.recycler.adapter = CharacterPagedListAdapter(
             object : CharacterPagedListAdapter.OnClickCharacter {
                 override fun onClick(character: Character) {
-                    Timber.i("$character")
                     view!!.findNavController().navigate(
                         HomeFragmentDirections.actionHomeFragmentToCharacterDetailFragment(
                             character.id,
                             character.description,
                             character.thumbnail.getUrl(),
                             character.name
-                        )
-                    )
+                        ))
                 }
             }
         )
         binding.lifecycleOwner = this
+
         binding.viewmodel = viewModel
         return binding.root
     }
+
 }

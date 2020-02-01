@@ -11,6 +11,7 @@ class HomeViewModel(private val characterRepository: CharacterRepository) : View
 
     private val compositeDisposable = CompositeDisposable()
 
+
     val characterPagedList : LiveData<PagedList<Character>> by lazy {
         characterRepository.fetchLiveCharacterPagedList(compositeDisposable)
     }

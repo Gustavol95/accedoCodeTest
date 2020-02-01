@@ -2,7 +2,6 @@ package com.accedo.codetest.utils
 
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
