@@ -60,14 +60,17 @@ class CharacterDetailFragment : Fragment() {
                     val adapter = binding.recycler.adapter as ComicAdapter
                     val list = it.response.data.results as List<Comic>
                     adapter.submitList(list)
+                    binding.frameLoading.visibility = View.GONE
                 }
                 is Status.Failure -> {
                     Timber.i("Failure: ${it.throwable}")
                     Toast.makeText(requireContext(),it.throwable.getSimpleMessage(), Toast.LENGTH_LONG).show()
+                    binding.frameLoading.visibility = View.GONE
 
                 }
                 is Status.Loading -> {
                     Timber.i("Loading")
+                    binding.frameLoading.visibility = View.VISIBLE
                 }
             }
         })
