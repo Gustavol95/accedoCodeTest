@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.accedo.codetest.data.network.Character
+import com.accedo.codetest.data.network.Status
 import com.accedo.codetest.data.repository.CharacterRepository
 import io.reactivex.disposables.CompositeDisposable
 
@@ -14,6 +15,14 @@ class HomeViewModel(private val characterRepository: CharacterRepository) : View
 
     val characterPagedList : LiveData<PagedList<Character>> by lazy {
         characterRepository.fetchLiveCharacterPagedList(compositeDisposable)
+    }
+
+    val networkStatus : LiveData<Status> by lazy {
+        characterRepository.getNetworkState()
+    }
+
+    fun refreshCharacterList(){
+        characterRepository.characterDataSourceFactory.chatacterLiveDataSource.value?.invalidate()
     }
 
     override fun onCleared() {

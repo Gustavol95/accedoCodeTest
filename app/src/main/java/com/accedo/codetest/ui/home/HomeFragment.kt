@@ -4,15 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.accedo.codetest.R
 import com.accedo.codetest.data.network.Character
 import com.accedo.codetest.data.network.Network
+import com.accedo.codetest.data.network.Status
 import com.accedo.codetest.data.repository.CharacterRepository
 import com.accedo.codetest.databinding.FragmentHomeBinding
+import com.accedo.codetest.utils.getSimpleMessage
+import com.accedo.codetest.utils.makeRounded
+import com.google.android.material.snackbar.Snackbar
+import okhttp3.internal.wait
+import timber.log.Timber
 
 class HomeFragment : Fragment() {
 
@@ -45,6 +54,30 @@ class HomeFragment : Fragment() {
         binding.lifecycleOwner = this
 
         binding.viewmodel = viewModel
+
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.refreshCharacterList()
+        }
+
+        binding.executePendingBindings()
+
+        viewModel.networkStatus.observe(this, Observer {
+            Timber.i("Stauts: $it ")
+            when (it) {
+                is Status.Success<*> -> {
+                    binding.swipeRefresh.isRefreshing = false
+                }
+                is Status.Failure -> {
+                    binding.swipeRefresh.isRefreshing = false
+                    Snackbar.make(binding.coordinator, it.throwable.getSimpleMessage(), Snackbar.LENGTH_INDEFINITE)
+                        .makeRounded().show()
+                }
+                is Status.Loading -> {
+                    binding.swipeRefresh.isRefreshing = true
+                }
+            }
+        })
+
         return binding.root
     }
 

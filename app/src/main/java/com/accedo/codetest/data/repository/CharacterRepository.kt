@@ -2,6 +2,7 @@ package com.accedo.codetest.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.accedo.codetest.App.Companion.PAGE_SIZE
@@ -43,6 +44,11 @@ class CharacterRepository(private val marvelService: MarvelService) {
                     })
         )
         return comicListLiveData
+    }
+
+    fun getNetworkState() : LiveData<Status> {
+        return Transformations.switchMap<CharacterDataSource, Status>(
+            characterDataSourceFactory.chatacterLiveDataSource, CharacterDataSource::networkStatusLiveData)
     }
 
 }
