@@ -29,11 +29,10 @@
 
                 <ImageView
                     android:id="@+id/ivThumbnail"
-                    imageUrl="@{args.urlThumbnail}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/character_thumbnail"
-                    android:transitionName="imageView"
+                    android:transitionName="@{@string/transition_thumbnail(args.idCharacter)}"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

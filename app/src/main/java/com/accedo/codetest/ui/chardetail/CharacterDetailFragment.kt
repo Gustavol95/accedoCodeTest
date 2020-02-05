@@ -1,11 +1,13 @@
 package com.accedo.codetest.ui.chardetail
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -20,6 +22,12 @@ import com.accedo.codetest.data.network.Status
 import com.accedo.codetest.data.repository.CharacterRepository
 import com.accedo.codetest.databinding.FragmentCharDetailBinding
 import com.accedo.codetest.utils.getSimpleMessage
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import timber.log.Timber
 
 class CharacterDetailFragment : Fragment() {
@@ -30,7 +38,10 @@ class CharacterDetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        postponeEnterTransition()
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move).apply {
+            duration = 500
+        }
     }
 
     override fun onCreateView(
@@ -39,17 +50,11 @@ class CharacterDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        sharedElementEnterTransition = ChangeBounds().apply {
-            duration = 750
-        }
-        sharedElementReturnTransition= ChangeBounds().apply {
-            duration = 750
-        }
 
         val binding: FragmentCharDetailBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_char_detail, container, false)
         val args = CharacterDetailFragmentArgs.fromBundle(arguments!!)
-        val viewmodel = ViewModelProvider(this, CharacterViewModelFactory(args.idCharacter, characterRepository))
+        val viewModel = ViewModelProvider(this, CharacterViewModelFactory(args.idCharacter, characterRepository))
             .get(CharacterDetailViewModel::class.java)
         swipeRefresh = binding.swipeRefresh!!
         binding.args = args
@@ -62,7 +67,7 @@ class CharacterDetailFragment : Fragment() {
 
         binding.recycler.setHasFixedSize(true)
 
-        viewmodel.comicList.observe(viewLifecycleOwner,  Observer {
+        viewModel.comicList.observe(viewLifecycleOwner,  Observer {
             when (it) {
                 is Status.Success<*> ->{
                     Timber.i("Success: ${it.response.data.results}")
@@ -85,9 +90,45 @@ class CharacterDetailFragment : Fragment() {
         })
 
         swipeRefresh.setOnRefreshListener {
-            viewmodel.refresh(args.idCharacter)
+            viewModel.refresh(args.idCharacter)
         }
         (activity as AppCompatActivity).supportActionBar?.title = args.name
+
+        Glide.with(requireContext())
+            .load(args.urlThumbnail)
+            .dontTransform()
+            .apply(
+                RequestOptions()
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_broken_image))
+            .listener(object: RequestListener<Drawable>{
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    startPostponedEnterTransition()
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    startPostponedEnterTransition()
+                    return false
+                }
+
+            })
+            .into(binding.ivThumbnail)
+
+
+        binding.executePendingBindings()
+
         return binding.root
     }
 }

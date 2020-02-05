@@ -1,6 +1,9 @@
 package com.accedo.codetest.utils
 
+import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.doOnPreDraw
+import androidx.fragment.app.Fragment
 import com.accedo.codetest.R
 import com.google.android.material.snackbar.Snackbar
 import retrofit2.HttpException
@@ -27,3 +30,11 @@ fun Snackbar.makeRounded() : Snackbar{
     view.background = view.context.resources.getDrawable(R.drawable.round_corner, null)
     return this
 }
+
+
+fun Fragment.waitForTransition(targetView: View) {
+    postponeEnterTransition()
+    targetView.doOnPreDraw { startPostponedEnterTransition() }
+}
+
+fun View.toTransitionGroup() = this to transitionName

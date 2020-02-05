@@ -9,9 +9,6 @@
             name="character"
             type="com.accedo.codetest.data.network.Character" />
 
-        <variable
-            name="listener"
-            type="com.accedo.codetest.ui.home.CharacterPagedListAdapter.OnClickCharacter" />
     </data>
 
     <RelativeLayout
@@ -21,31 +18,33 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardElevation="2dp"
-            app:cardCornerRadius="2dp"
             android:layout_margin="4dp"
-            android:onClick="@{() -> listener.onClick(character)}">
+            app:cardCornerRadius="2dp"
+            app:cardElevation="2dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/tvName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{character.name}"
-                    android:textStyle="bold"
                     android:padding="4dp"
-                    android:textSize="16sp"/>
+                    android:text="@{character.name}"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
                 <ImageView
                     android:id="@+id/ivThumbnail"
                     imageUrl="@{character.thumbnail.url}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
                     android:contentDescription="@string/character_thumbnail"
                     android:scaleType="fitStart"
-                    android:adjustViewBounds="true"/>
+                    android:transitionName="@{@string/transition_thumbnail(character.id)}" />
 
             </LinearLayout>
 
