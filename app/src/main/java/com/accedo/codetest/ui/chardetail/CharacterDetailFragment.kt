@@ -52,6 +52,7 @@ class CharacterDetailFragment : Fragment() {
                 Timber.i("$comic")
             }
         })
+        binding.recycler.setHasFixedSize(true)
 
         viewmodel.comicLiveList(args.idCharacter).observe(viewLifecycleOwner,  Observer {
             when (it) {

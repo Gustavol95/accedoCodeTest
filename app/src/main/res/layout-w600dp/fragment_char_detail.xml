@@ -4,25 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="args"
             type="com.accedo.codetest.ui.chardetail.CharacterDetailFragmentArgs" />
     </data>
 
-    <LinearLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
+
+
         <androidx.core.widget.NestedScrollView
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/grayBackground">
+                android:background="@color/grayBackground"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/ivThumbnail"
@@ -30,60 +32,46 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/character_thumbnail"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:transitionName="imageView"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/backgrounds/scenic[19]"
-                    android:transitionName="imageView"/>
+                    tools:srcCompat="@tools:sample/backgrounds/scenic[19]" />
 
                 <TextView
                     android:id="@+id/tvDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     description="@{args.description}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivThumbnail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
                     android:textSize="17sp"
                     android:textStyle="bold"
-                    android:padding="16dp"/>
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivThumbnail" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:spanCount="@integer/comic_grid_colums" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-
-        <FrameLayout
-            android:id="@+id/frameLoading"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminate="true"
-                android:layout_gravity="center"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/white"
-                android:alpha="0.4"/>
-        </FrameLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            app:spanCount="@integer/comic_grid_colums"/>
-
-        </FrameLayout>
-
-    </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </layout>
