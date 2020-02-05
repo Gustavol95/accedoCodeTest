@@ -24,9 +24,9 @@ import timber.log.Timber
 
 class CharacterDetailFragment : Fragment() {
 
-    val characterRepository = CharacterRepository(Network.marvelService)
+    private val characterRepository = CharacterRepository(Network.marvelService)
 
-    lateinit var swipeRefresh: SwipeRefreshLayout
+    private lateinit var swipeRefresh: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +67,7 @@ class CharacterDetailFragment : Fragment() {
                 is Status.Success<*> ->{
                     Timber.i("Success: ${it.response.data.results}")
                     val adapter = binding.recycler.adapter as ComicAdapter
+                    @Suppress("UNCHECKED_CAST")
                     val list = it.response.data.results as List<Comic>
                     adapter.submitList(list)
                     swipeRefresh.isRefreshing = false
