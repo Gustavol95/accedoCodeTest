@@ -51,6 +51,7 @@ class HomeFragment : Fragment() {
                 }
             }
         )
+
         binding.lifecycleOwner = this
 
         binding.viewmodel = viewModel
@@ -61,7 +62,7 @@ class HomeFragment : Fragment() {
 
         binding.executePendingBindings()
 
-        viewModel.networkStatus.observe(this, Observer {
+        viewModel.networkStatus.observe(viewLifecycleOwner, Observer {
             Timber.i("Stauts: $it ")
             when (it) {
                 is Status.Success<*> -> {

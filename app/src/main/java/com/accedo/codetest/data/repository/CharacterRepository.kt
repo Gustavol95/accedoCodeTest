@@ -29,7 +29,7 @@ class CharacterRepository(private val marvelService: MarvelService) {
         return characterPagedList
     }
 
-    fun fetchLiveComicsList(idCharacter: Long, compositeDisposable: CompositeDisposable): MutableLiveData<Status> {
+    fun fetchLiveComicsList(idCharacter: Long, compositeDisposable: CompositeDisposable): LiveData<Status> {
         val comicListLiveData = MutableLiveData<Status>()
         comicListLiveData.value = Status.Loading
         compositeDisposable.add(
