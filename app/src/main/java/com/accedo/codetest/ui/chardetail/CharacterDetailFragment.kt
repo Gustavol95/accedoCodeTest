@@ -42,7 +42,7 @@ class CharacterDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         postponeEnterTransition()
-        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move).apply {
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.no_transition).apply {
             duration = 500
         }
     }
