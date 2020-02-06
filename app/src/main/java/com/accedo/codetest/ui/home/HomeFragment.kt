@@ -55,6 +55,7 @@ class HomeFragment : Fragment() {
                 }
             )
         }
+
         binding.lifecycleOwner = this
 
         binding.viewmodel = viewModel

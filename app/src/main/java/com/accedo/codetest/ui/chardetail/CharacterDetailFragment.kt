@@ -89,6 +89,14 @@ class CharacterDetailFragment : Fragment() {
             }
         })
 
+        viewModel.emptyListLiveData.observe(viewLifecycleOwner, Observer {
+            Timber.i("LIST IS EMPTY LIVEDATA: $it")
+            binding.recycler.visibility = if(it)  View.GONE else View.VISIBLE
+            binding.tvEmpty.visibility = if(it)  View.VISIBLE else View.GONE
+        })
+
+
+
         swipeRefresh.setOnRefreshListener {
             viewModel.refresh(args.idCharacter)
         }

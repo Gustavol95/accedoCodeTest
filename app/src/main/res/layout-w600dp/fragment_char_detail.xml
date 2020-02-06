@@ -11,7 +11,7 @@
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefresh  "
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -32,6 +32,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/character_thumbnail"
+                    android:minHeight="@dimen/comic_height"
                     android:transitionName="@{@string/transition_thumbnail(args.idCharacter)}"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
@@ -59,6 +60,18 @@
                     app:layout_constraintStart_toStartOf="@+id/guideline"
                     app:layout_constraintTop_toTopOf="parent"
                     app:spanCount="@integer/comic_grid_colums" />
+
+                <TextView
+                    android:id="@+id/tvEmpty"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/comic_height"
+                    android:gravity="center"
+                    android:text="@string/no_comics_available"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toTopOf="parent" />
+
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline"

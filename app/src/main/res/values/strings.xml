@@ -3,4 +3,5 @@
     <string name="character_thumbnail">Character Thumbnail</string>
     <string name="comic_thumbnail">Comic Thumbnail</string>
     <string name="transition_thumbnail">thumbnail %d</string>
+    <string name="no_comics_available">No comics available</string>
 </resources>
