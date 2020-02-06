@@ -22,12 +22,14 @@ import com.accedo.codetest.data.network.Status
 import com.accedo.codetest.data.repository.CharacterRepository
 import com.accedo.codetest.databinding.FragmentCharDetailBinding
 import com.accedo.codetest.utils.getSimpleMessage
+import com.accedo.codetest.utils.makeRounded
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
+import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 
 class CharacterDetailFragment : Fragment() {
@@ -79,7 +81,9 @@ class CharacterDetailFragment : Fragment() {
                 }
                 is Status.Failure -> {
                     Timber.i("Failure: ${it.throwable}")
-                    Toast.makeText(requireContext(),it.throwable.getSimpleMessage(), Toast.LENGTH_LONG).show()
+                    Snackbar.make(binding.coordinator, it.throwable.getSimpleMessage(), Snackbar.LENGTH_INDEFINITE)
+                        .makeRounded()
+                        .show()
                     swipeRefresh.isRefreshing = false
                 }
                 is Status.Loading -> {
