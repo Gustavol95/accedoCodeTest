@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
         ViewModelProvider(this, HomeViewModelFactory(repository))
             .get(HomeViewModel::class.java)
     }
-
+    private var snackBar: Snackbar? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,10 +75,14 @@ class HomeFragment : Fragment() {
                 }
                 is Status.Failure -> {
                     binding.swipeRefresh.isRefreshing = false
-                    Snackbar.make(binding.coordinator, it.throwable.getSimpleMessage(), Snackbar.LENGTH_INDEFINITE)
-                        .makeRounded().show()
+                    snackBar = Snackbar.make(binding.coordinator, it.throwable.getSimpleMessage(), Snackbar.LENGTH_INDEFINITE)
+                        .makeRounded()
+                        .setAction(getString(R.string.retry)) { _ -> it.retryListener?.retry()  }
+
+                    snackBar?.show()
                 }
                 is Status.Loading -> {
+                    snackBar?.dismiss()
                     binding.swipeRefresh.isRefreshing = true
                 }
             }

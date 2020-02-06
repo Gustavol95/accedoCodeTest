@@ -1,5 +1,7 @@
 package com.accedo.codetest.data.network
 
+import com.accedo.codetest.utils.RetryListener
+
 data class ApiResponse<T>(val data : Data<T>)
 
 data class Data<T>(
@@ -36,6 +38,6 @@ data class Comic(
 
 sealed class Status {
     class Success<T>(val response: ApiResponse<T>) : Status()
-    class Failure(val throwable: Throwable) : Status()
+    class Failure(val throwable: Throwable, val retryListener: RetryListener?) : Status()
     object Loading : Status()
 }

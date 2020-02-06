@@ -40,7 +40,7 @@ class CharacterRepository(private val marvelService: MarvelService) {
                         comicListLiveData.postValue(Status.Success(it))
                     },
                     {
-                        comicListLiveData.postValue(Status.Failure(it))
+                        comicListLiveData.postValue(Status.Failure(it,null))
                     })
         )
         return comicListLiveData

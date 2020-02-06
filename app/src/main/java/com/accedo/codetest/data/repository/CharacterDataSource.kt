@@ -6,6 +6,7 @@ import com.accedo.codetest.App.Companion.PAGE_SIZE
 import com.accedo.codetest.data.network.Character
 import com.accedo.codetest.data.network.MarvelService
 import com.accedo.codetest.data.network.Status
+import com.accedo.codetest.utils.RetryListener
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -33,7 +34,12 @@ class CharacterDataSource(
                         networkStatusLiveData.postValue(Status.Success(it))
                     },
                     {
-                        networkStatusLiveData.postValue(Status.Failure(it))
+                        val listener = object : RetryListener {
+                            override fun retry() {
+                                loadInitial(params, callback)
+                            }
+                        }
+                        networkStatusLiveData.postValue(Status.Failure(it, listener))
                     }
                 )
         )
@@ -55,7 +61,12 @@ class CharacterDataSource(
                         }
                     },
                     {
-                        networkStatusLiveData.postValue(Status.Failure(it))
+                        val listener = object : RetryListener {
+                            override fun retry() {
+                                loadAfter(params, callback)
+                            }
+                        }
+                        networkStatusLiveData.postValue(Status.Failure(it, listener))
                     }
                 )
         )

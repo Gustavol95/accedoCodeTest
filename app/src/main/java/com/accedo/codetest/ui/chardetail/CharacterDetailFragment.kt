@@ -37,6 +37,7 @@ class CharacterDetailFragment : Fragment() {
     private val characterRepository = CharacterRepository(Network.marvelService)
 
     private lateinit var swipeRefresh: SwipeRefreshLayout
+    private var snackBar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,13 +82,16 @@ class CharacterDetailFragment : Fragment() {
                 }
                 is Status.Failure -> {
                     Timber.i("Failure: ${it.throwable}")
-                    Snackbar.make(binding.coordinator, it.throwable.getSimpleMessage(), Snackbar.LENGTH_INDEFINITE)
+                    snackBar = Snackbar.make(binding.coordinator, it.throwable.getSimpleMessage(), Snackbar.LENGTH_INDEFINITE)
                         .makeRounded()
-                        .show()
+                        .setAction(getString(R.string.retry)) { viewModel.refresh(args.idCharacter) }
+
+                    snackBar?.show()
                     swipeRefresh.isRefreshing = false
                 }
                 is Status.Loading -> {
                     Timber.i("Loading")
+                    snackBar?.dismiss()
                     swipeRefresh.isRefreshing = true
                 }
             }
